@@ -1,6 +1,5 @@
-FROM php:8.2-cli
+FROM php:8.2-apache
 RUN docker-php-ext-install mysqli
-WORKDIR /app
-COPY . /app
+RUN a2enmod rewrite session
+COPY . /var/www/html/
 EXPOSE 80
-CMD ["php", "-S", "0.0.0.0:80"]
