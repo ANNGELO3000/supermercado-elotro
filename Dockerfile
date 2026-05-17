@@ -1,5 +1,10 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 RUN docker-php-ext-install mysqli
-RUN a2dismod mpm_event mpm_worker && a2enmod mpm_prefork rewrite
-COPY . /var/www/html/
+WORKDIR /app
+COPY . /app
+
+RUN echo "session.save_path = /tmp" >> /usr/local/etc/php/php.ini && \
+    echo "session.gc_maxlifetime = 3600" >> /usr/local/etc/php/php.ini
+
 EXPOSE 80
+CMD ["php", "-S", "0.0.0.0:80", "-t", "/app"]
