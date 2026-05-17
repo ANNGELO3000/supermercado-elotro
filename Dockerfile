@@ -1,4 +1,5 @@
-FROM php:8.2-apache
-COPY . /var/www/html/
-RUN a2enmod rewrite
+FROM php:8.2-cli
+WORKDIR /app
+COPY . /app
 EXPOSE 80
+CMD ["php", "-S", "0.0.0.0:80"]
